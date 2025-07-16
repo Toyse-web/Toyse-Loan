@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Offer</title>
+    <link rel="stylesheet" href="/styles/loanOfer.css">
+</head>
+<body>
+    <div class="grand-container">
+        <div class="offer-container">
+            <a href="/" class="arrow">🡰</a>
+            <p class="offer-text">Loan Offer</p>
+        </div>
+        <div class="main-container">
+            <p class="choose">Choose Amount</p>
+            <div class="container">
+                <button class="add-sub" id="subtract">-</button>| 
+                <h1 id="loanAmount"><%= initialAmount %></h1> | 
+                <button class="add-sub" id="add">+</button>
+            </div>
+            <div class="amount-btn">
+                <button class="randomAmount" data-amount="21000">₦21,000</button>
+                <button class="randomAmount" data-amount="34000">₦34,000</button>
+                <button class="randomAmount" data-amount="40000">₦40,000</button>
+            </div>
+            <p class="loan-range">Your loan amount range is ₦2,000 to ₦50,000</p>
+            <hr>
+
+            <h2>Choose Your Loan Tenure</h2>
+            <div class="loan-tenure">
+                <% tenures.forEach(tenure => { %>
+                    <div class="tenure <%= tenure.isDefault ? 'active' : '' %>"
+                        data-days="<%= tenure.days %>"
+                        data-installments="<%= tenure.installments %>"
+                        data-rate="<%= tenure.rate %>"><%= tenure.days %> Days
+                        <p><%= tenure.rate %> Monthly</p>
+                    </div>
+                <%}); %>
+            </div>
+            <p class="tenure-txt">Slide right or left to view more tenure options</p>
+            <hr>
+
+            <div class="loan-details">
+                <p>Tenure</p>
+
+                <p id="installment-info">
+                    <% tenures.find(t => t.isDefault).installments %> installment(s) for
+                    <%= tenures.find(t => t.isDefault).days %> days 
+                </p>
+
+                <p>Received Amount</p>
+                <p id="received-amount"><%= initialAmount %></p>
+                <p>Discount</p>
+                <p class="coupon">Click To Use Coupons <span class="next">&#10095;</span></p>
+                <p>Interest</p>
+                <p id="interest-display"><% defaultCalculation.formatted %></p>
+                <p>Total Amount Due</p>
+                <p id="total-amount"><%= (defaultCalculation.numeric + numericAmount).toLocaleString() %></p>
+
+                <!-- Add hidden field to store numeric amount -->
+                 <input type="hidden" id="numeric-amount" value="<%= numericAmount %>">
+            </div>
+        </div>
+
+        <!-- The due date -->
+        <div class="repayment-details">
+            <p class="schedule">Repayment Schedule</p>
+            <button class="detail-btn">Details &#10095;</button>
+            <div class="repay-det">
+                <p class="dueDate"><% const defaultTenure = tenures.find(t => t.isDefault) %>
+                    <%= new Date(Date.now() + defaultTenure.days * 24 * 60 * 60 * 1000).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric"
+                    }) %>
+                </p>
+
+                <!-- The amount due -->
+                <p class="amountDue"><%= (defaultCalculation.numeric + numericAmount).toLocaleString() %></p>
+                <p class="small-description">Your first repayment date</p>
+                <p class="small-description">To be paid</p>
+            </div>
+        </div>
+
+        <p class="note">Note: It is important that you repay your loan as at when due to maintain a good credit report
+            and avoid rollover fee of 2% daily.</p>
+
+        <button class="take-loan">Take Loan</button>
+    </div>
+    <script src="/js/index.js"></script>
+</body>
+</html>

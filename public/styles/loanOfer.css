@@ -1,0 +1,217 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: rgb(243, 249, 252);
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.offer-container {
+    display: grid;
+    grid-template-columns: 30px 100px;
+    margin-top: 20px;
+}
+
+.arrow {
+    cursor: pointer;
+    font-size: 20px;
+    color: #000;
+    text-decoration: none;
+}
+
+.offer-text {
+    margin-top: 5px;
+    font-weight: 700;
+}
+
+.main-container {
+    background: #fff;
+    border-radius: 10px;
+    margin-top: 20px;
+    max-width: 500px;
+    padding: 10px 20px 10px 20px;
+}
+
+.choose {
+    text-align: center;
+    font-size: 15px;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f3efef;
+    border-radius: 10px;
+    gap: 10px;
+    color: #5c5a5a;
+    margin-top: 10px;
+    padding: 8px 24px;
+    font-size: 2rem;
+}
+
+.add-sub {
+    border: none;
+    cursor: pointer;
+    color: #5c5a5a;
+    font-size: 2rem;
+}
+
+h1 {
+    color: #299e29;
+    font-size: 1.8rem;
+}
+
+.amount-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.amount-btn button {
+    border-radius: 20px;
+    border: 1px solid #299e29;
+    padding: 10px 20px;
+    background: none;
+    color: #299e29;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.amount-btn button:hover {
+    background: #299e29;
+    color: #fff;
+    font-weight: 200;
+}
+
+.loan-range {
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+h2 {
+    font-size: 15px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.loan-tenure {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.tenure {
+    background: #f3efef;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 15px;
+    padding: 10px;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+.tenure.active {
+    background-color: #299e29;
+    border-color: #1e631e;
+    color: white;
+}
+
+.tenure-txt {
+    text-align: center;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+.coupon {
+    cursor: pointer;
+    color: #fca93d;
+    font-weight: 700;
+}
+
+.next {
+    margin-left: 8px;
+}
+
+.loan-details {
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 18px;
+    font-size: 15px;
+}
+
+.repayment-details {
+    background: #fff;
+    border-radius: 10px;
+    margin-top: 15px;
+    max-width: 500px;
+    padding: 10px 20px 10px 20px;
+}
+
+.schedule {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.detail-btn {
+    margin-left:   18rem;
+    border-radius: 20px;
+    padding: 10px 16px;
+    background: none;
+    color: #299e29;
+    font-weight: 700;
+    border: 1px solid #299e29;
+    cursor: pointer;
+}
+
+.detail-btn:hover {
+    background: #299e29;
+    color: #fff;
+}
+
+.repay-det {
+    display: grid;
+    grid-template-columns: auto auto;
+    margin-top: -20px;
+}
+
+.small-description {
+    font-size: 9px;
+    color: #646161;
+}
+
+.note {
+    font-size: 15px;
+    text-align: center;
+    max-width: 500px;
+    width: 27rem;
+}
+
+.take-loan {
+    border-radius: 20px;
+    border: none;
+    background: #299e29;
+    margin-top: 20px;
+    /* margin-left: 2%; */
+    padding: 10px 10px;
+    color: white;
+    font-weight: 700;
+    width: 27rem;
+    margin-bottom: 30px;
+    cursor: pointer;
+}
+
+.take-loan:hover {
+    background-color: #1e631e;
+}

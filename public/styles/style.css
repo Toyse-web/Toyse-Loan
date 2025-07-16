@@ -1,0 +1,133 @@
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+        display: flex;
+        justify-content: center;
+        font-family: sans-serif;
+    }
+
+    #hero {
+        margin-top: 10%;
+        background: linear-gradient(to top, #ffffff, #32cd32, #32cd32);
+        max-width: 500px;
+        padding: 1rem;
+        border-radius: 10px;
+        color: #ffff;
+        text-align: center;
+    }
+
+    .headText {
+        margin-top: 10px;
+        font-weight: bold;
+        margin-right: 240px;
+    }
+
+    .tile {
+        margin-top: -15px;
+        font-size: 12px;
+    }
+
+    .limit {
+        margin-top: 50px;
+    }
+
+    #hero h1 {
+        margin-top: 20px;
+    }
+
+    .outstanding {
+        margin-top: 50px;
+        color: #082708d4;
+        font-weight: 700;
+        font-size: 12px;
+    }
+
+    #hero h2 {
+        color: #082708d4;
+        font-size: 2rem;
+    }
+
+    .button-wrapper {
+        margin-top: 20px;
+        row-gap: 10px;
+        display: grid;
+    }
+
+    .getFunds-btn {
+        background-color: #299e29;
+        padding: 18px 24px;
+        border: none;
+        border-radius: 30px;
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        text-decoration: none;
+        text-align: center;
+    }
+
+    .getFunds-btn:hover {
+        background-color: #1e631e;
+    }
+
+    .repayment-btn {
+        background: #fff;
+        padding: 5px 20px;
+        border: solid #299e29;
+        border-radius: 30px;
+        color: #299e29;
+        font-size: 1.2rem;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    #repaymentAmount {
+        font-size: 12px;
+        margin-top: 10px;
+        font-weight: lighter;
+    }
+
+    .foot-container {
+       margin-top: 9rem;
+       display: grid;
+       justify-content: center;
+       align-items: center;
+       grid-template-columns: 1fr 1fr 1fr;
+       column-gap: 60px;
+       background: #fff;
+    }
+
+    .home {
+        cursor: pointer;
+    }
+
+    .repay-menu {
+        cursor: pointer;
+    }
+
+    .account-menu {
+        cursor: pointer;
+    }
+
+    .foot-container.scrolled {
+        box-shadow: 0 4px 12px rgb(255, 254, 254);
+    }
+
+    .title-class {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        column-gap: 3rem;
+        margin-left: -13px;
+        color: #299e29;
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 10px;
+        margin-top: -5px;
+    }
+
+    .account {
+        margin-left: 8px;
+    }

@@ -137,6 +137,7 @@ h2 {
     cursor: pointer;
     color: #fca93d;
     font-weight: 700;
+    text-decoration: none;
 }
 
 .next {

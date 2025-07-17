@@ -5,7 +5,126 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Use coupons</title>
 </head>
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    body {
+        font-family: sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .grand-container {
+        margin-top: 3%;
+    }
+
+    .arrow-back {
+        padding: 16px;
+        color: #000;
+        text-decoration: none;
+    }
+
+    h1 {
+        margin-top: -20px;
+        font-size: 20px;
+        margin-left: 45px;
+    }
+
+    .main-container {
+        padding: 16px 24px;
+        max-width: 500px;
+    }
+
+    .container1 {
+        background-color: #e4f5e3;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        border-radius: 10px;
+        border: 1.5px solid #cff3cd;
+        border-bottom: none;
+        max-width: 500px;
+    }
+
+    .coupon-days {
+        padding: 30px 10px;
+        color: #299e29;
+        font-weight: bold;
+        font-size: 1.3rem;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        border-right: 1px dashed #afaeae;
+        border-bottom: 1px dashed #afaeae;
+    }
+
+    .rules {
+        font-size: 13px;
+        padding: 10px;
+        border-radius: 10px;
+        background-color: #e4f5e3;
+        border: 1.5px solid #cff3cd;
+        border-top: none;
+        cursor: pointer;
+    }
+
+    h2 {
+        font-size: 1rem;
+        padding: 8px;
+    }
+
+    .coupon-details {
+        font-size: 10px;
+        padding: 5px;
+        border-bottom: 1px dashed #afaeae;
+        border-radius: 10px;
+    }
+
+    .coupon-details p  {
+        padding: 5px;
+    }
+
+    .container2 {
+        background-color: #e4f5e3;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        border-radius: 10px;
+        border: 1.5px solid #cff3cd;
+        max-width: 500px;
+        margin-top: 10px;
+    }
+</style>
 <body>
-    
+    <div class="grand-container">
+        <a href="/loan-offer" class="arrow-back">🡰</a>
+        <h1>My Coupons</h1>
+        <div class="main-container">
+            <div class="container1">
+                <div class="coupon-days">5 Days</div>
+                <div class="coupon-details">
+                    <h2>Interest Free</h2>
+                    <p>Min Loan Amount: <strong>2,000</strong></p>
+                    <p>valid Until: <strong>18 Aug 2025</strong></p>
+                    <p>Valid Tenure: <strong>30+ days</strong></p>
+                </div>
+            </div>
+            <div class="rules">Rules Of Use &#10095;</div>
+
+            <div class="container2">
+                <div class="coupon-days">5 Days</div>
+        
+                <div class="coupon-details">
+                    <h2>Interest Free</h2>
+                    <p>Min Loan Amount: <strong>2,000</strong></p>
+                    <p>valid Until: <strong>Aug 2025</strong></p>
+                    <p>Valid Tenure: <strong>30+ days</strong></p>
+                </div>
+            </div>
+            <div class="rules">Rules Of Use &#10095;</div>
+        </div>
+    </div>
 </body>
 </html>

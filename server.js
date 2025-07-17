@@ -4,7 +4,7 @@ import { fileURLToPath } from "url";
 
 const dirName = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.static(path.join(dirName, "public")));
@@ -20,6 +20,7 @@ app.get("/", (req, res) => {
     });
 });
 
+// Get the loan offer page
 app.get("/loan-offer", (req, res) => {
     const defaultAmount = 50000;
     const defaultTenure = {days: 60, rate: 20.4}
@@ -35,6 +36,11 @@ app.get("/loan-offer", (req, res) => {
         ],
         defaultCalculation: calculateInterest(defaultAmount, defaultTenure.days, defaultTenure.rate)
     });
+});
+
+// Get the coupon page
+app.get("/coupon", (req, res) => {
+    res.render("coupon");
 });
 
 function calculateInterest(amount, days, rate) {

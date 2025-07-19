@@ -222,11 +222,8 @@ h2 {
         padding: 10px;
     }
 
-    .main-container,
-    .repayment-details,
-    .take-loan {
-        width: 100%;
-        max-width: 100%;
+    .grand-container {
+        width: 23rem;
     }
 
     .container {
@@ -260,15 +257,22 @@ h2 {
     .loan-details {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        font-size: 15px;
+        font-size: 13px;
     }
 
     .detail-btn {
         margin-top: 10px;
+        margin-left: 15rem;
+        padding: 10px 10px;
+    }
+
+    .note {
+        font-size: 13px;
+        width: 23rem;
     }
 
     .take-loan {
-        width: 100%;
+        width: 23rem;
     }
 
     .offer-container {

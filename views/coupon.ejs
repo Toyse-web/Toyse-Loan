@@ -44,18 +44,20 @@
         display: grid;
         grid-template-columns: 1fr 2fr;
         border-radius: 10px;
+        width: 30rem;
         border: 1.5px solid #cff3cd;
         border-bottom: none;
         max-width: 500px;
     }
 
     .coupon-days {
-        padding: 30px 10px;
+        /* padding: 40px 10px; */
         color: #299e29;
         font-weight: bold;
-        font-size: 1.3rem;
+        font-size: 2rem;
         border-radius: 5px;
         display: flex;
+        justify-content: center;
         align-items: center;
         border-right: 1px dashed #afaeae;
         border-bottom: 1px dashed #afaeae;
@@ -68,7 +70,30 @@
         background-color: #e4f5e3;
         border: 1.5px solid #cff3cd;
         border-top: none;
+        border-bottom: none;
         cursor: pointer;
+    }
+
+    .rules-content {
+        background-color: #e4f5e3;
+        font-size: 12px;
+        overflow: hidden;
+        margin-top: -5px;
+        padding: 12px 24px;
+    }
+
+    .rules-content.active {
+        max-height: 200px; /* Adjust based on content */
+        padding: 12px;
+    }
+
+    .active-arrow {
+        transition: transform 0.3s ease;
+        display: inline-block;
+    }
+
+    .active-arrow.active {
+        transform: rotate(90deg);
     }
 
     h2 {
@@ -77,7 +102,7 @@
     }
 
     .coupon-details {
-        font-size: 10px;
+        font-size: 15px;
         padding: 5px;
         border-bottom: 1px dashed #afaeae;
         border-radius: 10px;
@@ -91,6 +116,7 @@
         background-color: #e4f5e3;
         display: grid;
         grid-template-columns: 1fr 2fr;
+        width: 30rem;
         border-radius: 10px;
         border: 1.5px solid #cff3cd;
         max-width: 500px;
@@ -111,20 +137,72 @@
                     <p>Valid Tenure: <strong>30+ days</strong></p>
                 </div>
             </div>
-            <div class="rules">Rules Of Use &#10095;</div>
+            <div class="rules-container">
+                <div class="rules">
+                    Rules Of Use <span class="active-arrow">&#10095;</span>
+                </div>
+                <div class="rules-content">
+                    <p>For cash loan</p>
+                    <p>For old customers</p>
+                    <p>Loan amount ₦2000 can be used</p>
+                    <p>For installment loan and non-installment loan</p>
+                    <p>For 30+ days tenure</p>
+
+                    <p>You can enjoy 5 days interest free. Maximum deduction amount ₦100000</p> 
+                </div>
+            </div>
 
             <div class="container2">
                 <div class="coupon-days">5 Days</div>
         
                 <div class="coupon-details">
                     <h2>Interest Free</h2>
-                    <p>Min Loan Amount: <strong>2,000</strong></p>
+                    <p>Min Loan Amount: <strong>₦2,000</strong></p>
                     <p>valid Until: <strong>Aug 2025</strong></p>
                     <p>Valid Tenure: <strong>30+ days</strong></p>
                 </div>
             </div>
-            <div class="rules">Rules Of Use &#10095;</div>
+            <div class="rules-container">
+                <div class="rules">
+                    Rules Of Use <span class="active-arrow">&#10095;</span>
+                </div>
+                <div class="rules-content">
+                    <p>For cash loan</p>
+                    <p>For old customers</p>
+                    <p>Loan amount ₦2000 can be used</p>
+                    <p>For installment loan and non-installment loan</p>
+                    <p>For 30+ days tenure</p>
+
+                    <p>You can enjoy 5 days interest free. Maximum deduction amount ₦100000</p> 
+                </div>
+            </div>
         </div>
     </div>
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const rules = document.querySelectorAll(".rules");
+
+        // Hide all content initially
+        document.querySelectorAll(".rules-content").forEach(content => {
+            content.style.display = "none";
+        });
+
+        rules.forEach(rule => {
+            rule.addEventListener("click", function() {
+                const content = this.nextElementSibling;
+                const arrow = this.querySelector(".active-arrow");
+
+                // Toggle content visibility
+                if (content.style.display === "none") {
+                    content.style.display = "block";
+                    arrow.classList.add("active");
+                } else {
+                    content.style.display = "none";
+                    arrow.classList.remove("active");
+                }
+            });
+        });
+    });
+</script>
 </html>

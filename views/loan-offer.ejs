@@ -52,7 +52,12 @@
                 <p>Received Amount</p>
                 <p id="received-amount"><%= initialAmount %></p>
                 <p>Discount</p>
-                <a href="/coupon" class="coupon">Click To Use Coupons <span class="next">&#10095;</span></a>
+                <% if (selectedCoupon) { %>
+                <div class="applied-coupon" onclick="location.href='/coupon'">
+                    <%= selectedCoupon.name %> <span class="next">&#10095;</span>
+                </div> <% } else { %>
+                 <a href="/coupon" class="coupon">Click To Use Coupons <span class="next">&#10095;</span></a>
+                <% } %> 
                 <p>Interest</p>
                 <p id="interest-display"><% defaultCalculation.formatted %></p>
                 <p>Total Amount Due</p>

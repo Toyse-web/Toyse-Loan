@@ -1,6 +1,7 @@
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
+import cookieParser from "cookie-parser";
 
 const dirName = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -11,6 +12,7 @@ app.use(express.static(path.join(dirName, "public")));
 app.use(express.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.set("views", path.join(dirName, "views"));
+app.use(cookieParser());
 
 // Routes
 app.get("/", (req, res) => {
@@ -20,10 +22,12 @@ app.get("/", (req, res) => {
     });
 });
 
-// Get the loan offer page
+// Loan-offer route
 app.get("/loan-offer", (req, res) => {
     const defaultAmount = 50000;
     const defaultTenure = {days: 60, rate: 20.4}
+    // Get stored coupon data
+    const selectedCoupon = req.cookies.selectedCoupon ? JSON.parse(req.cookies.selectedCoupon) : null;
     res.render("loan-offer", {
         initialAmount: "₦50,000",
         minAmount: 2000,
@@ -34,6 +38,7 @@ app.get("/loan-offer", (req, res) => {
             { days: 60, rate: "20.4%", installments: 2, isDefault: true },
             { days: 30, rate: "24%", installments: 1}
         ],
+        selectedCoupon: selectedCoupon,
         defaultCalculation: calculateInterest(defaultAmount, defaultTenure.days, defaultTenure.rate)
     });
 });

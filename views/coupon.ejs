@@ -106,6 +106,32 @@
         padding: 5px;
         border-bottom: 1px dashed #afaeae;
         border-radius: 10px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+    }
+
+     .check-mark {
+        position: absolute;
+        top: 7.8rem;
+        right: 1rem;
+        color: white;
+        background: #299e29;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 20px;
+        height: 20px;
+        font-weight: bold;
+        opacity: 0;
+        transform: scale(0.5);
+        transition: all 0.3s ease;
+    }
+
+    .coupon-details.selected .check-mark{
+        opacity: 1;
+        transform: scale(1);
     }
 
     .coupon-details p  {
@@ -129,11 +155,12 @@
         <div class="main-container">
             <div class="container1">
                 <div class="coupon-days">5 Days</div>
-                <div class="coupon-details">
+                <div class="coupon-details" data-coupon-name="5 Days Free" data-coupon-type="days" data-code="FREE20%">
                     <h2>Interest Free</h2>
                     <p>Min Loan Amount: <strong>2,000</strong></p>
                     <p>valid Until: <strong>18 Aug 2025</strong></p>
                     <p>Valid Tenure: <strong>30+ days</strong></p>
+                    <div class="check-mark">✓</div>
                 </div>
             </div>
             <div class="rules-container">
@@ -152,13 +179,14 @@
             </div>
 
             <div class="container2">
-                <div class="coupon-days">5 Days</div>
+                <div class="coupon-days">20%</div>
         
-                <div class="coupon-details">
+                <div class="coupon-details" data-coupon-name="20% Off" data-coupon-type="percent" data-code="FREE20%">
                     <h2>Interest Free</h2>
                     <p>Min Loan Amount: <strong>₦2,000</strong></p>
                     <p>valid Until: <strong>Aug 2025</strong></p>
                     <p>Valid Tenure: <strong>30+ days</strong></p>
+                    <div class="check-mark">✓</div>
                 </div>
             </div>
             <div class="rules-container">
@@ -181,6 +209,8 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const rules = document.querySelectorAll(".rules");
+        const couponDetails = document.querySelectorAll(".coupon-details");
+        const returnDelay = 1000;
 
         // Hide all content initially
         document.querySelectorAll(".rules-content").forEach(content => {
@@ -188,7 +218,9 @@
         });
 
         rules.forEach(rule => {
-            rule.addEventListener("click", function() {
+            rule.addEventListener("click", function(e) {
+                e.stopPropagation(); //Prevent trigerring coupon selection
+
                 const content = this.nextElementSibling;
                 const arrow = this.querySelector(".active-arrow");
 
@@ -202,6 +234,33 @@
                 }
             });
         });
+
+        couponDetails.forEach(detail => {
+            detail.addEventListener("click", function() {
+                // Get coupon details
+                const couponData = {
+                    name: this.dataset.couponName,
+                    type: this.dataset.couponType,
+                    code: this.dataset.code
+                };
+
+                // Set cookie that expires in 7 days
+                document.cookie = `selectedCoupon=${encodeURIComponent(JSON.stringify(couponData))}; path=/; max-age=${7 * 24 * 60 * 60}; SameSite=Lax`;
+                                
+                // Remove selection from all
+                couponDetails.forEach(d => d.classList.remove("selected"));
+
+                // Mark this one as selected
+                this.classList.add("selected");
+
+                // Return to loan offer after delay
+                setTimeout(() => {
+                    window.location.href = "/loan-offer";
+                }, returnDelay);
+
+            });
+        });
+
     });
 </script>
 </html>

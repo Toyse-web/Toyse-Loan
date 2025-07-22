@@ -140,6 +140,11 @@ h2 {
     text-decoration: none;
 }
 
+.applied-coupon {
+    cursor: pointer;
+    color: #fca93d;
+}
+
 .next {
     margin-left: 8px;
 }

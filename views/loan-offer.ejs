@@ -59,9 +59,28 @@
                  <a href="/coupon" class="coupon">Click To Use Coupons <span class="next">&#10095;</span></a>
                 <% } %> 
                 <p>Interest</p>
-                <p id="interest-display"><% defaultCalculation.formatted %></p>
+                <p id="interest-display">
+                    <% if ((selectedCoupon && defaultCalculation.final !== defaultCalculation.original)) { %>
+                        <span style="text-decoration: line-through;">
+                            ₦<%= Number(defaultCalculation.original).toLocaleString() %>
+                        </span>
+                        <span style="margin-left: 10px; font-weight: bold;">
+                            ₦<%= Number(defaultCalculation.final).toLocaleString() %>
+                        </span>
+                    <% } else { %>
+                        <span style="margin-left: 10px; font-weight: bold;">
+                            ₦<%= Number(defaultCalculation.original).toLocaleString() %>
+                        </span>
+                    <% } %>
+                </p>
+                <!-- The hidden coupon type & value for my dynamic js -->
+                 <% if (selectedCoupon) {%>
+                    <input type="hidden" id="coupon-type" value="<%= selectedCoupon.type %>">
+                    <input type="hidden" id="coupon-value" value="<%= selectedCoupon.value %>">
+                <% } %>
+                
                 <p>Total Amount Due</p>
-                <p id="total-amount"><%= (defaultCalculation.numeric + numericAmount).toLocaleString() %></p>
+                <p id="total-amount">₦ <%= (parseFloat(defaultCalculation.numeric) + numericAmount).toLocaleString() %></p>
 
                 <!-- Add hidden field to store numeric amount -->
                  <input type="hidden" id="numeric-amount" value="<%= numericAmount %>">

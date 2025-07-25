@@ -334,3 +334,8 @@ h2 {
         font-size: 0.9rem;
     }
 }
+
+#interest-display {
+    white-space: nowrap;
+}
+

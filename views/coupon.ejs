@@ -155,7 +155,7 @@
         <div class="main-container">
             <div class="container1">
                 <div class="coupon-days">5 Days</div>
-                <div class="coupon-details" data-coupon-name="5 Days Free" data-coupon-type="days" data-code="FREE20%">
+                <div class="coupon-details" data-coupon-name="5 Days Free" data-coupon-type="days" data-code="FREE20%" data-value="20">
                     <h2>Interest Free</h2>
                     <p>Min Loan Amount: <strong>2,000</strong></p>
                     <p>valid Until: <strong>18 Aug 2025</strong></p>
@@ -181,7 +181,7 @@
             <div class="container2">
                 <div class="coupon-days">20%</div>
         
-                <div class="coupon-details" data-coupon-name="20% Off" data-coupon-type="percent" data-code="FREE20%">
+                <div class="coupon-details" data-coupon-name="20% Off" data-coupon-type="percent" data-code="FREE20%" data-value="20">
                     <h2>Interest Free</h2>
                     <p>Min Loan Amount: <strong>₦2,000</strong></p>
                     <p>valid Until: <strong>Aug 2025</strong></p>
@@ -241,7 +241,8 @@
                 const couponData = {
                     name: this.dataset.couponName,
                     type: this.dataset.couponType,
-                    code: this.dataset.code
+                    code: this.dataset.code,
+                    value: this.dataset.value
                 };
 
                 // Set cookie that expires in 7 days

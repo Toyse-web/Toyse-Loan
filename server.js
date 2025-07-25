@@ -28,6 +28,9 @@ app.get("/loan-offer", (req, res) => {
     const defaultTenure = {days: 60, rate: 20.4}
     // Get stored coupon data
     const selectedCoupon = req.cookies.selectedCoupon ? JSON.parse(req.cookies.selectedCoupon) : null;
+
+    const defaultCalculation = calculateInterest(defaultAmount, defaultTenure.days, defaultTenure.rate, selectedCoupon);
+    
     res.render("loan-offer", {
         initialAmount: "₦50,000",
         minAmount: 2000,
@@ -38,8 +41,8 @@ app.get("/loan-offer", (req, res) => {
             { days: 60, rate: "20.4%", installments: 2, isDefault: true },
             { days: 30, rate: "24%", installments: 1}
         ],
-        selectedCoupon: selectedCoupon,
-        defaultCalculation: calculateInterest(defaultAmount, defaultTenure.days, defaultTenure.rate)
+        selectedCoupon,
+        defaultCalculation //(defaultAmount, defaultTenure.days, defaultTenure.rate)
     });
 });
 
@@ -48,15 +51,31 @@ app.get("/coupon", (req, res) => {
     res.render("coupon");
 });
 
-function calculateInterest(amount, days, rate) {
-    const months = days / 30; //Convert days to months
-    const interest = (amount * rate / 100).toFixed(2);
-    return {
-        formatted: `₦${Number(interest).toLocaleString()}`,
-        numeric: interest,
-        months: months
-    };
-}
+// Function for coupon interest
+    function calculateInterest(amount, days, rate, coupon = null) {
+        const months = days / 30;
+        const original = parseFloat(((amount * rate / 100) * months).toFixed(2));
+
+        let discount = 0;
+
+        if (coupon) {
+            if (coupon.type === "percent") {
+                discount = parseFloat((original * parseFloat(coupon.value / 100)).toFixed(2));
+            } else if (coupon.type === "days") {
+                const freeDays = 5;
+                const interestPerDay = original / days;
+                discount = parseFloat((interestPerDay * freeDays).toFixed(2))
+            }
+        }
+
+        const final = parseFloat((original - discount).toFixed(2));
+
+        return {
+            original,
+            discount,
+            final
+        };
+    }
 
 // Handle form submission
 app.post("apply-loan", (req, res) => {

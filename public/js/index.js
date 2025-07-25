@@ -9,6 +9,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const numericAmount = document.querySelector("#numeric-amount");
     const installmentInfo = document.querySelector("#installment-info");
     const totalAmount = document.querySelector("#total-amount");
+    const couponType = document.getElementById("coupon-type")?.value;
+    const couponValue = parseFloat(document.getElementById("coupon-value")?.value);
 
     // Initialize state
     let currentAmount = parseInt(document.getElementById("numeric-amount").value);
@@ -28,18 +30,32 @@ document.addEventListener("DOMContentLoaded", () => {
         // For amount due date
         document.querySelector(".amountDue").textContent = "₦" + (Number(currentAmount) + Number(interest));
 
+        const couponApplied = document.querySelector(".applied-coupon");
+        if (couponApplied) {
+            const discountRate = 0.20;
+            const dicountAmount = (interest * discountRate).toFixed(2);
+            const finalInterest = (interest - dicountAmount).toFixed(2);
 
+            interestDisplay.innerHTML = `<span style="text-decoration: line-through;">
+                    ₦${Number(interest).toLocaleString()}
+                </span>
+                <span style="margin-left: 10px">
+                    ₦${Number(finalInterest).toLocaleString()}
+                </span>`;
+        } else {
+            interestDisplay.innerHTML = `<span> ₦${Number(interest).toLocaleString()}</span>`;
+        }
 
         // Update all displays
         document.getElementById("loanAmount").textContent = `₦${currentAmount.toLocaleString()}`;
         document.getElementById("received-amount").textContent = `₦${currentAmount.toLocaleString()}`;
-        document.getElementById("interest-display").textContent = `₦${Number(interest).toLocaleString()}`;
+        // document.getElementById("interest-display").textContent = `₦${Number(interest).toLocaleString()}`;
         document.getElementById("total-amount").textContent = `₦${Number(totalAmount).toLocaleString()}`;
 
         // Update display amount
         amountDisplay.textContent = `₦${currentAmount.toLocaleString()}`;
         installmentInfo.textContent = `${installments} installment(s) for ${days} days`;
-        interestDisplay.textContent = `₦${Number(interest).toLocaleString()}`;
+        // interestDisplay.textContent = `₦${Number(interest).toLocaleString()}`;
         totalAmount.textContent = "₦" + totalRepayment.toLocaleString();
     };
 

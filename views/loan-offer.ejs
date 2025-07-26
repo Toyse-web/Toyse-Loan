@@ -53,14 +53,14 @@
                 <p id="received-amount"><%= initialAmount %></p>
                 <p>Discount</p>
                 <% if (selectedCoupon) { %>
-                <div class="applied-coupon" onclick="location.href='/coupon'">
+                <div class="applied-coupon" onclick="location.href='/remove-coupon'">
                     <%= selectedCoupon.name %> <span class="next">&#10095;</span>
                 </div> <% } else { %>
                  <a href="/coupon" class="coupon">Click To Use Coupons <span class="next">&#10095;</span></a>
                 <% } %> 
                 <p>Interest</p>
                 <p id="interest-display">
-                    <% if ((selectedCoupon && defaultCalculation.final !== defaultCalculation.original)) { %>
+                    <% if (selectedCoupon && defaultCalculation.final !== defaultCalculation.original) { %>
                         <span style="text-decoration: line-through;">
                             ₦<%= Number(defaultCalculation.original).toLocaleString() %>
                         </span>

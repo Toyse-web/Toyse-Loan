@@ -48,7 +48,50 @@ app.get("/loan-offer", (req, res) => {
 
 // Get the coupon page
 app.get("/coupon", (req, res) => {
-    res.render("coupon");
+    const selectedCoupon = req.cookies.selectedCoupon ? JSON.parse(req.cookies.selectedCoupon) : null;
+
+    // List of coupons
+    const coupons = [
+        {name: "5 Days Free", code: "FREEDAYS", type: "days", value: "5"},
+        {name: "20% off", code: "FREE20%", type: "percent", value: "20"}
+    ];
+
+    res.render("coupon", {coupons, selectedCoupon});
+});
+
+app.get("/selecte-coupon/:code", (req, res) => {
+    const code = req.params.code;
+    const selectedCoupon = req.cookies.selectedCoupon ? JSON.parse(req.cookies.selectedCoupon) : null;
+
+    // To check if user is clicking the same coupon
+    if (selectedCoupon && selectedCoupon.code === code) {
+        res.clearCookie("selectedCoupon");
+        return res.redirect("/loan-offer");
+    }
+
+    const coupons = [
+        {name: "5 Days Free", code: "FREEDAYS", type: "days", value: "5"},
+        {name: "20% off", code: "FREE20%", type: "percent", value: "20"}
+    ];
+
+    const coupon = coupons.find(coup => coup.code === code);
+    if (!coupon) return res.redirect("/coupon");
+
+    res.cookie("selectedCoupon", JSON.stringify(coupon));
+    res.redirect("/loan-offer");
+})
+
+// Apply coupon
+app.post("/apply-coupon", (req, res) => {
+    const { coupon } = req.body;
+    res.cookie("selectedCoupon", JSON.stringify(coupon), { httpOnly: true });
+    res.redirect("/loan-offer");
+});
+
+// Remove coupon route
+app.get("/remove-coupon", (req, res) => {
+    res.clearCookie("selectedCoupon");
+    res.redirect("/loan-offer");
 });
 
 // Function for coupon interest

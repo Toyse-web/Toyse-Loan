@@ -17,47 +17,53 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentTenure = document.querySelector(".tenure.active");
 
     // Function to update all displays
-    const updateDisplays = () => {
-        // if (!currentTenure || currentTenure.dataset.rate === "Locked") return;
+   const updateDisplays = () => {
+    const rate = parseFloat(currentTenure.dataset.rate);
+    const days = parseInt(currentTenure.dataset.days);
+    const months = days / 30;
+    const installments = currentTenure.dataset.installments;
 
-        const rate = parseFloat(currentTenure.dataset.rate);
-        const days = parseInt(currentTenure.dataset.days);
-        const months = days / 30;
-        const installments = currentTenure.dataset.installments;
-        const interest = (currentAmount * (rate / 100) * months).toFixed(2);
-        const totalRepayment = Number(currentAmount) + Number(interest);
+    let interest = (currentAmount * (rate / 100) * months).toFixed(2);
+    let discount = 0;
 
-        // For amount due date
-        document.querySelector(".amountDue").textContent = "₦" + (Number(currentAmount) + Number(interest));
+    const couponApplied = document.querySelector(".applied-coupon");
+    const couponType = document.getElementById("coupon-type")?.value;
+    const couponValue = parseFloat(document.getElementById("coupon-value")?.value);
 
-        const couponApplied = document.querySelector(".applied-coupon");
-        if (couponApplied) {
-            const discountRate = 0.20;
-            const dicountAmount = (interest * discountRate).toFixed(2);
-            const finalInterest = (interest - dicountAmount).toFixed(2);
-
-            interestDisplay.innerHTML = `<span style="text-decoration: line-through;">
-                    ₦${Number(interest).toLocaleString()}
-                </span>
-                <span style="margin-left: 10px">
-                    ₦${Number(finalInterest).toLocaleString()}
-                </span>`;
-        } else {
-            interestDisplay.innerHTML = `<span> ₦${Number(interest).toLocaleString()}</span>`;
+    // Calculate discount if coupon is applied
+    if (couponApplied && couponType && !isNaN(couponValue)) {
+        if (couponType === "percent") {
+            discount = (interest * (couponValue / 100)).toFixed(2);
+        } else if (couponType === "days") {
+            const interestPerDay = interest / days;
+            discount = (interestPerDay * couponValue).toFixed(2); //Assuming couponValue is number of free days
         }
+        interest = (interest - discount).toFixed(2);
+    }
 
-        // Update all displays
-        document.getElementById("loanAmount").textContent = `₦${currentAmount.toLocaleString()}`;
-        document.getElementById("received-amount").textContent = `₦${currentAmount.toLocaleString()}`;
-        // document.getElementById("interest-display").textContent = `₦${Number(interest).toLocaleString()}`;
-        document.getElementById("total-amount").textContent = `₦${Number(totalAmount).toLocaleString()}`;
+    const totalRepayment = Number(currentAmount) + Number(interest);
 
-        // Update display amount
-        amountDisplay.textContent = `₦${currentAmount.toLocaleString()}`;
-        installmentInfo.textContent = `${installments} installment(s) for ${days} days`;
-        // interestDisplay.textContent = `₦${Number(interest).toLocaleString()}`;
-        totalAmount.textContent = "₦" + totalRepayment.toLocaleString();
-    };
+    // Update the interest UI
+    if (couponApplied && discount > 0) {
+        const originalInterest = Number(interest) + Number(discount);
+        interestDisplay.innerHTML = `<span style="text-decoration: line-through;">
+                ₦${Number(originalInterest).toLocaleString()}
+            </span>
+            <span style="margin-left: 10px">
+                ₦${Number(interest).toLocaleString()}
+            </span>`;
+    } else {
+        interestDisplay.innerHTML = `<span>₦${Number(interest).toLocaleString()}</span>`;
+    }
+
+    // Update other displays
+    loanAmount.textContent = `₦${currentAmount.toLocaleString()}`;
+    document.getElementById("received-amount").textContent = `₦${currentAmount.toLocaleString()}`;
+    document.querySelector(".amountDue").textContent = `₦${totalRepayment.toLocaleString()}`;
+    document.getElementById("total-amount").textContent = `₦${totalRepayment.toLocaleString()}`;
+    amountDisplay.textContent = `₦${currentAmount.toLocaleString()}`;
+    installmentInfo.textContent = `${installments} installment(s) for ${days} days`;
+};
 
     
 // Tricks that handles the buttons to add and subtract loan amounts

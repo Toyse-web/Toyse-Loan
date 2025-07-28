@@ -46,6 +46,11 @@ app.get("/loan-offer", (req, res) => {
     });
 });
 
+// Get account page
+app.get("/account", (req, res) => {
+    res.render("account");
+});
+
 // Get the coupon page
 app.get("/coupon", (req, res) => {
     const selectedCoupon = req.cookies.selectedCoupon ? JSON.parse(req.cookies.selectedCoupon) : null;

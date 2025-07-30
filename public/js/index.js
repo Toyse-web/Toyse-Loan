@@ -155,16 +155,24 @@ const add = document.getElementById("add");
         });
     });
 
-});
-
-// The modal function
-const modal = document.getElementById("repayment-modal");
-const takeLoanBtn = document.getElementById("take-loan-btn");
+    // The modal function
+    const modal = document.getElementById("repayment-modal");
+    const takeLoanBtn = document.getElementById("take-loan-btn");
+    const overlay = document.getElementById("modal-overlay");
 
     takeLoanBtn?.addEventListener("click", () => {
         modal.classList.add("show");
+        overlay.classList.add("show");
+        document.body.classList.add("modal-open");
     });
 
-    function closeModal() {
+    window.closeModal = function () {
         modal.classList.remove("show");
-    }
+        overlay.classList.remove("show");
+        document.body.classList.remove("modal-open");
+    };
+
+    // Clicking outside modal closses the modal
+    overlay.addEventListener("click", closeModal);
+
+});

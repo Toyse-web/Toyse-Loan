@@ -156,3 +156,15 @@ const add = document.getElementById("add");
     });
 
 });
+
+// The modal function
+const modal = document.getElementById("repayment-modal");
+const takeLoanBtn = document.getElementById("take-loan-btn");
+
+    takeLoanBtn?.addEventListener("click", () => {
+        modal.classList.add("show");
+    });
+
+    function closeModal() {
+        modal.classList.remove("show");
+    }

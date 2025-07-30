@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repayment Schedule</title>
+</head>
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .repayment-modal {
+        position: fixed;
+        bottom: 100%;
+        left: 0;
+        width: 100%;
+        height: 50vh;
+        background: #fff;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        z-index: 10000;
+        transition: bottom 0.4s ease-in-out;
+    }
+
+    .repayment-modal.show {
+        bottom: 0;
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .modal-header h2 {
+        font-size: 18px;
+        margin: 0;
+    }
+
+    .close-btn {
+        background: none;
+        border: none;
+        font-size: 22px;
+        cursor: pointer;
+    }
+
+    .summary-box {
+        background-color: #e6f8eb;
+        color: #1a7732;
+        display: flex;
+        justify-content: space-between;
+        border-radius: 10px;
+        padding: 15px 20px;
+        margin: 20px 0;
+    }
+
+    .summary-box .installments,
+    .summary-box .repay-amount {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .label {
+        font-size: 12px;
+        color: #777;
+    }
+
+    .schedule {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .schedule-item {
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .circle-line {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-right: 10px;
+    }
+
+    .circle {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #aaa;
+    }
+
+    .circle.filled {
+        background-color: #1a7732;
+    }
+
+    .line {
+        width: 2px;
+        height: 50px;
+        background-color: #ccc;
+    }
+
+    .details {
+        flex: 1;
+    }
+
+    .details .date {
+        font-weight: 600;
+        font-size: 14px;
+        margin-bottom: 3px;
+    }
+
+    .details .amount {
+        color: #000;
+        font-weight: bold;
+        font-size: 14px;
+        margin-bottom: 3px;
+    }
+</style>
+<body>
+    <div class="repayment-modal" id="repayment-modal">
+        <div class="modal-header">
+            <p>&#10094;</p>
+            <h2>Repayment Schedule</h2>
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+        </div>
+
+    <div class="summary-box">
+        <div>
+            <p class="installments">3</p>
+            <p class="label">Installment</p>
+        </div>
+        <div>
+            <p class="repay-amount">75000</p>
+            <p class="label">Repay Amount</p>
+        </div>
+    </div>
+
+    <div class="schedule">
+        <div class="schedule-item">
+            <div class="circle-line">
+                <span class="circle filled"></span>
+                <span class="line"></span>
+            </div>
+            <div class="details">
+                <p class="date">17 Aug 2025</p>
+                <p class="amount">25000</p>
+                <p class="label">1st installment</p>
+                <p class="label">Repay Amount</p>
+            </div>
+        </div>
+
+        <div class="schedule-item">
+            <div class="circle-line">
+                <span class="circle filled"></span>
+                <span class="line"></span>
+            </div>
+            <div class="details">
+                <p class="date">17 Aug 2025</p>
+                <p class="amount">25000</p>
+                <p class="label">1st installment</p>
+                <p class="label">Repay Amount</p>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>

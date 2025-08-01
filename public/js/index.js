@@ -166,46 +166,7 @@ const add = document.getElementById("add");
         overlay.classList.add("show");
         document.body.classList.add("modal-open");
 
-        // Dynamic population logic
-        const installments = parseInt(document.getElementById("modal-installments")?.dataset.installments || 0);
-        const totalAmount = (parseFloat(defaultCalculation.numeric)?.dataset.total || 0);
-        const startDate = document.getElementById("schedule-list")?.dataset.startDate;
-
-        const modalTotalAmount = document.getElementById("modal-total-amount");
-        const scheduleList = document.getElementById("schedule-list");
-
-        // Update total display
-        if (modalTotalAmount) {
-            modalTotalAmount.textContent = `₦${totalAmount.toLocaleString()}`;
-        }
-
-        // Clear existing list
-        if (scheduleList) {
-            scheduleList.innerHTML = "";
-
-            const amountPerInstallment = (totalAmount / installments).toFixed(2);
-            const baseDate = new Date(startDate);
-
-            for (let i = 0; i < installments; i++) {
-                const date = new Date(baseDate);
-                date.setMonth(baseDate.getMonth() + i);
-
-                const item = document.createElement("dive");
-                item.className = "schedule-item";
-                item.innerHTML = `<div class="circle-line">
-                        <span class="circle filled"></span>
-                        ${i < installments - 1 ? '<span class="line"></span>' : ''}
-                    </div>
-                    <div class="details">
-                        <p class="date">${dateFormat(date)}</p>
-                        <p class="amount">₦${parseFloat(amountPerInstallment).toLocaleString()}</p>
-                        <p class="label">${i + 1}${getOrdinal(i + 1)} Installment</p>
-                        <p class="label">Repay Amount</p>
-                    </div>`;
-                    scheduleList.appendChild(item);
-            }
-        }
-    });
+    }); 
 
     window.closeModal = function () {
         modal.classList.remove("show");

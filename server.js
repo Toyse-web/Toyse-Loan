@@ -25,22 +25,35 @@ app.get("/", (req, res) => {
 // Loan-offer route
 app.get("/loan-offer", (req, res) => {
     const defaultAmount = 50000;
-    const defaultTenure = {days: 60, rate: 20.4}
+    // const defaultTenure = {days: 60, rate: 20.4}
+    const tenures = [
+        {days: 91, rate: "Locked", installments: 3},
+        {days: 60, rate: "20.4%", installments: 2, isDefault: true},
+        {days: 30, rate: "24%", installments: 1}
+    ];
+
+    const defaultTenure = tenures.find(t => t.isDefault);
     // Get stored coupon data
     const selectedCoupon = req.cookies.selectedCoupon ? JSON.parse(req.cookies.selectedCoupon) : null;
 
-    const defaultCalculation = calculateInterest(defaultAmount, defaultTenure.days, defaultTenure.rate, selectedCoupon);
+    const defaultCalculation = calculateInterest(
+        defaultAmount, 
+        defaultTenure.days, 
+        defaultTenure.rate, 
+        selectedCoupon
+    );
     
     res.render("loan-offer", {
         initialAmount: "₦50,000",
         minAmount: 2000,
         maxAmount: 50000,
         numericAmount: defaultAmount,
-        tenures: [
+        tenures, /*[
             { days: 91, rate: "Locked", installments: 3 },
             { days: 60, rate: "20.4%", installments: 2, isDefault: true },
             { days: 30, rate: "24%", installments: 1}
-        ],
+        ], */
+        defaultTenure,
         selectedCoupon,
         defaultCalculation //(defaultAmount, defaultTenure.days, defaultTenure.rate)
     });
@@ -102,26 +115,33 @@ app.get("/remove-coupon", (req, res) => {
 // Function for coupon interest
     function calculateInterest(amount, days, rate, coupon = null) {
         const months = days / 30;
-        const original = parseFloat(((amount * rate / 100) * months).toFixed(2));
+        const numericAmount = typeof amount === "string" ? parseFloat(amount) : amount;
+        const numericRate = typeof rate === "string" ? parseFloat(rate) : rate;
 
+        // const original = parseFloat(((amount * rate / 100) * months).toFixed(2));
+
+        let originalInterest = (numericAmount * numericRate * months) / 100;
         let discount = 0;
 
         if (coupon) {
-            if (coupon.type === "percent") {
-                discount = parseFloat((original * parseFloat(coupon.value / 100)).toFixed(2));
-            } else if (coupon.type === "days") {
-                const freeDays = 5;
-                const interestPerDay = original / days;
-                discount = parseFloat((interestPerDay * freeDays).toFixed(2))
+            const { type, value } = coupon;
+            if (type === "percent") {
+                discount = (originalInterest * value / 100);
+            } else if (type === "days") {
+                const dailyInterest = originalInterest / days;
+                // const freeDays = 5;
+                // const interestPerDay = original / days;
+                discount = dailyInterest * value;
             }
         }
 
-        const final = parseFloat((original - discount).toFixed(2));
+        const finalInterest = originalInterest - discount;
 
         return {
-            original,
-            discount,
-            final
+            original: originalInterest.toFixed(2),
+            discount: discount.toFixed(2),
+            final: finalInterest.toFixed(2),
+            numeric: finalInterest.toFixed(2)
         };
     }
 

@@ -124,6 +124,16 @@
     }
 </style>
 <body>
+    <% 
+        // const defaultTenure = tenures.find(t => t.isDefault);
+        const interest = typeof defaultCalculation !== 'undefined' ? numericAmount : 0;
+        const couponSelect = typeof selectedCoupon !== 'undefined' && selectedCoupon !== null;
+        const original = couponSelect ? parseFloat(defaultCalculation.original) : parseFloat(defaultCalculation.numeric);
+        const final = parseFloat(defaultCalculation.numeric);
+        const discount = couponSelect ? parseFloat(defaultCalculation.discount) : 0;
+        const totalRepayment = interest + final; 
+    %>
+
     <div class="repayment-modal" id="repayment-modal">
         <div class="modal-header">
             <p>&#10094;</p>
@@ -133,22 +143,32 @@
 
     <div class="summary-box">
         <div>
-            <p class="installments" id="modal-installments" data-installments="<%= tenures.installments %>">
-                <%= tenures.installments %>
+            <p class="installments">
+                <%= defaultTenure.installments %>
             </p>
             <p class="label">Installment</p>
         </div>
         <div>
-            <p class="repay-amount" id="modal-total-amount" data-total="<%= parseInt(defaultCalculation.numeric) %>">
-                ₦<%= (parseInt(defaultCalculation.numeric) + numericAmount).toLocaleString() %>
+            <p class="repay-amount" id="modal-total-amount">
+                <% if (couponSelect && discount > 0) { %>
+                    <span>
+                        ₦<%= totalRepayment.toLocaleString() %>
+                    </span>
+                <% } else { %>
+                    <span>
+                        ₦<%= totalRepayment.toLocaleString() %>
+                    </span>
+                <% } %>
             </p>
-            <p class="label">Repay Amount</p>
+            <p class="label">Total Repay</p>
         </div>
     </div>
 
-    <!-- Dynamic schedule will be injected here -->
-     <div class="schedule" id="schedule-list" data-start-date="<%= new Date().toISOString() %>">
-        <!-- JS will append schedule items here -->
+    <div class="schedule">
+        <div class="schedule-item">
+            <p>16 Sep 2025 25,000 (2nd installment)</p>
+        </div>
+    </div>
      </div>
     </div>
 </body>

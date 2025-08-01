@@ -161,9 +161,50 @@ const add = document.getElementById("add");
     const overlay = document.getElementById("modal-overlay");
 
     takeLoanBtn?.addEventListener("click", () => {
+        // Show modal
         modal.classList.add("show");
         overlay.classList.add("show");
         document.body.classList.add("modal-open");
+
+        // Dynamic population logic
+        const installments = parseInt(document.getElementById("modal-installments")?.dataset.installments || 0);
+        const totalAmount = (parseFloat(defaultCalculation.numeric)?.dataset.total || 0);
+        const startDate = document.getElementById("schedule-list")?.dataset.startDate;
+
+        const modalTotalAmount = document.getElementById("modal-total-amount");
+        const scheduleList = document.getElementById("schedule-list");
+
+        // Update total display
+        if (modalTotalAmount) {
+            modalTotalAmount.textContent = `₦${totalAmount.toLocaleString()}`;
+        }
+
+        // Clear existing list
+        if (scheduleList) {
+            scheduleList.innerHTML = "";
+
+            const amountPerInstallment = (totalAmount / installments).toFixed(2);
+            const baseDate = new Date(startDate);
+
+            for (let i = 0; i < installments; i++) {
+                const date = new Date(baseDate);
+                date.setMonth(baseDate.getMonth() + i);
+
+                const item = document.createElement("dive");
+                item.className = "schedule-item";
+                item.innerHTML = `<div class="circle-line">
+                        <span class="circle filled"></span>
+                        ${i < installments - 1 ? '<span class="line"></span>' : ''}
+                    </div>
+                    <div class="details">
+                        <p class="date">${dateFormat(date)}</p>
+                        <p class="amount">₦${parseFloat(amountPerInstallment).toLocaleString()}</p>
+                        <p class="label">${i + 1}${getOrdinal(i + 1)} Installment</p>
+                        <p class="label">Repay Amount</p>
+                    </div>`;
+                    scheduleList.appendChild(item);
+            }
+        }
     });
 
     window.closeModal = function () {
@@ -174,5 +215,16 @@ const add = document.getElementById("add");
 
     // Clicking outside modal closses the modal
     overlay.addEventListener("click", closeModal);
+
+    function dateFormat(date) {
+        const options = { day: "numeric", month: "short", year: "numeric" };
+        return new Date(date).toLocaleDateString("en-GB", options).replace(/ /g, " ");
+    }
+
+    function getOrdinal(n) {
+        const s = ["th", "st", "nd", "rd"];
+        const v = n % 100;
+        return s[(v - 20) % 10] || s[v] || s[0];
+    }
 
 });

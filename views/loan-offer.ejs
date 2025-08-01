@@ -80,7 +80,7 @@
                 <% } %>
                 
                 <p>Total Amount Due</p>
-                <p id="total-amount">₦ <%= (parseFloat(defaultCalculation.numeric) + numericAmount).toLocaleString() %></p>
+                <p id="total-amount">₦<%= (parseFloat(defaultCalculation.numeric) + numericAmount).toLocaleString() %></p>
 
                 <!-- Add hidden field to store numeric amount -->
                  <input type="hidden" id="numeric-amount" value="<%= numericAmount %>">

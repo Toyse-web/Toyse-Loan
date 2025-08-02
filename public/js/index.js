@@ -63,6 +63,19 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("total-amount").textContent = `₦${totalRepayment.toLocaleString()}`;
     amountDisplay.textContent = `₦${currentAmount.toLocaleString()}`;
     installmentInfo.textContent = `${installments} installment(s) for ${days} days`;
+
+    const modalTotal = document.getElementById("modal-total-amount");
+    const modalInstallment = document.getElementById("modal-installment");
+
+    // To reflect the calculated value inside the repayment modal
+    if (modalTotal) {
+        modalTotal.textContent = `₦${parseFloat(totalRepayment).toLocaleString()}`;
+    }
+
+    // Update the modal installment
+    if (modalInstallment) {
+        modalInstallment.textContent = `${installments}`;
+    }
 };
 
     
@@ -166,6 +179,8 @@ const add = document.getElementById("add");
         overlay.classList.add("show");
         document.body.classList.add("modal-open");
 
+        // Recalculate before showing modal
+        updateDisplays();
     }); 
 
     window.closeModal = function () {

@@ -124,16 +124,6 @@
     }
 </style>
 <body>
-    <% 
-        // const defaultTenure = tenures.find(t => t.isDefault);
-        const interest = typeof defaultCalculation !== 'undefined' ? numericAmount : 0;
-        const couponSelect = typeof selectedCoupon !== 'undefined' && selectedCoupon !== null;
-        const original = couponSelect ? parseFloat(defaultCalculation.original) : parseFloat(defaultCalculation.numeric);
-        const final = parseFloat(defaultCalculation.numeric);
-        const discount = couponSelect ? parseFloat(defaultCalculation.discount) : 0;
-        const totalRepayment = interest + final; 
-    %>
-
     <div class="repayment-modal" id="repayment-modal">
         <div class="modal-header">
             <p>&#10094;</p>
@@ -143,23 +133,11 @@
 
     <div class="summary-box">
         <div>
-            <p class="installments">
-                <%= defaultTenure.installments %>
-            </p>
+            <p class="installments" id="modal-installment"></p>
             <p class="label">Installment</p>
         </div>
         <div>
-            <p class="repay-amount" id="modal-total-amount">
-                <% if (couponSelect && discount > 0) { %>
-                    <span>
-                        ₦<%= totalRepayment.toLocaleString() %>
-                    </span>
-                <% } else { %>
-                    <span>
-                        ₦<%= totalRepayment.toLocaleString() %>
-                    </span>
-                <% } %>
-            </p>
+            <p class="repay-amount" id="modal-total-amount">₦0</p>
             <p class="label">Total Repay</p>
         </div>
     </div>

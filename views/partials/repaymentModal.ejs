@@ -102,7 +102,7 @@
 
     .line {
         width: 2px;
-        height: 50px;
+        height: 70px;
         background-color: #ccc;
     }
 
@@ -131,23 +131,31 @@
             <button class="close-btn" onclick="closeModal()">&times;</button>
         </div>
 
-    <div class="summary-box">
-        <div>
-            <p class="installments" id="modal-installment"></p>
-            <p class="label">Installment</p>
+        <div class="summary-box">
+            <div>
+                <p class="installments" id="modal-installment"></p>
+                <p class="label">Installment</p>
+            </div>
+            <div>
+                <p class="repay-amount" id="modal-total-amount">₦0</p>
+                <p class="label">Total Repay</p>
+            </div>
         </div>
-        <div>
-            <p class="repay-amount" id="modal-total-amount">₦0</p>
-            <p class="label">Total Repay</p>
-        </div>
-    </div>
 
-    <div class="schedule">
-        <div class="schedule-item">
-            <p>16 Sep 2025 25,000 (2nd installment)</p>
-        </div>
-    </div>
-     </div>
+        <div class="schedule" id="schedule-list"></div>
+
+        <!-- <div class="schedule-item">
+            <div class="circle-line">
+                <span class="circle filled"></span>
+                <span class="line"></span>
+            </div>
+            <div class="details">
+                <p class="date">Date</p>
+                <p class="amount">Amount</p>
+                <p class="label">2nd installment</p>
+                <p class="label">Repay Amount</p>
+            </div>
+        </div> -->
     </div>
 </body>
 </html>

@@ -76,6 +76,34 @@ document.addEventListener("DOMContentLoaded", () => {
     if (modalInstallment) {
         modalInstallment.textContent = `${installments}`;
     }
+
+    const scheduleList = document.getElementById("schedule-list");
+    if (!currentTenure || !scheduleList) return;
+
+    const amountPerInstallments = (totalRepayment / installments).toFixed(2);
+    const baseDate = new Date(); //today as starting point
+
+    scheduleList.innerHTML = ""; //Clear any one
+
+    for (let i = 0; i < installments; i++) {
+        const date = new Date(baseDate);
+        date.setMonth(date.getMonth() + i);
+
+        const scheduleItem = document.createElement("div");
+        scheduleItem.className = "schedule-item";
+        scheduleItem.innerHTML = `
+            <div class="circle-line">
+                <span class="circle filled">
+                </span> <span class="line"></span>
+            </div>
+            <div class="details">
+                <p class="date">${dateFormat(date)}</p>
+                <p class="amount">₦${parseFloat(amountPerInstallments).toLocaleString()}</p>
+                <p class="label">${i + 1}${getOrdinal(i + 1)} installment</p>
+                <p class="label">Repay Amount</p>
+            </div>`;
+            scheduleList.appendChild(scheduleItem);
+    }
 };
 
     

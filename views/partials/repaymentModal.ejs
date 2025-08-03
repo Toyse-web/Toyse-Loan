@@ -122,6 +122,68 @@
         font-size: 14px;
         margin-bottom: 3px;
     }
+
+    @media screen and (max-width: 768px) {
+        .repayment-modal {
+            /* width: 100vw; */
+            height: 60vh;
+            padding: 15px;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .summary-box {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 15px;
+        }
+
+        .summary-box .installments,
+        .summary-box .repay-amount {
+            font-size: 18px;
+        }
+
+        .modal-header h2 {
+            font-size: 16px;
+        }
+
+        .details .date,
+        .details .amount {
+            font-size: 13px;
+        }
+
+        .line {
+            height: 50px;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .repayment-modal {
+            height: 65vh;
+        }
+
+        .circle {
+            width: 8px;
+            height: 8px;
+        }
+
+        .line {
+            height: 40px;
+        }
+
+        .details .date,
+        .details .amount {
+            font-size: 12px;
+        }
+
+        .modal-header h2 {
+            font-size: 15px;
+        }
+
+        .close-btn {
+            font-size: 20px;
+        }
+    }
 </style>
 <body>
     <div class="repayment-modal" id="repayment-modal">
@@ -143,19 +205,6 @@
         </div>
 
         <div class="schedule" id="schedule-list"></div>
-
-        <!-- <div class="schedule-item">
-            <div class="circle-line">
-                <span class="circle filled"></span>
-                <span class="line"></span>
-            </div>
-            <div class="details">
-                <p class="date">Date</p>
-                <p class="amount">Amount</p>
-                <p class="label">2nd installment</p>
-                <p class="label">Repay Amount</p>
-            </div>
-        </div> -->
     </div>
 </body>
 </html>

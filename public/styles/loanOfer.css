@@ -317,10 +317,16 @@ body.modal-open {
 @media (max-width: 480px) {
     .main-container {
         padding: 10px;
+        width: 22rem;
     }
 
     .container {
         font-size: 1.2rem;
+    }
+
+    .offer-container {
+        left: 15px;
+        position: relative;
     }
 
     h1 {
@@ -336,8 +342,9 @@ body.modal-open {
     }
 
     .note {
-        width: 100%;
+        width: 22rem;
         padding: 0 10px;
+        font-size: 15px;
     }
 }
 

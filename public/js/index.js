@@ -231,4 +231,9 @@ const add = document.getElementById("add");
         return s[(v - 20) % 10] || s[v] || s[0];
     }
 
+    // Get the success button
+    document.getElementById("apply").addEventListener("click", () => {
+        window.location.href = "/loan-success";
+    });
+
 });

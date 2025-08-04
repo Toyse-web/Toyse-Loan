@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Approved</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: #f0fff4;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+            text-align: center;
+        }
+
+        .success-container {
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #1a7732;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        .home-btn {
+            margin-top: 25px;
+            padding: 12px 25px;
+            border: none;
+            background-color: #1a7732;
+            color: white;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .home-btn:hover {
+            background-color: #145a26;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <h1>🎉 Hurray!! 🎉</br> Your Loan Has Been Approved</h1>
+        <p>Enjoy your funds and don't forget to repay on time to maintain a good credit score.</p>
+        <button class="home-btn" onclick="window.location.href='/'">Back</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js">
+        // Fire the confetti once on load
+        window.onload = () => {
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 },
+            });
+        };
+    </script>
+    
+</body>
+</html>

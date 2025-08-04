@@ -155,3 +155,8 @@ app.post("apply-loan", (req, res) => {
 app.listen(port, () => {
     console.log(`Server is listening to port ${port}`)
 });
+
+// get the loan success page
+app.get("/loan-success", (req, res) => {
+    res.render("partials/success");
+});

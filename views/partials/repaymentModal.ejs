@@ -16,9 +16,10 @@
     .repayment-modal {
         position: fixed;
         bottom: 100%;
+        display: none;
         /* left: 0; */
         width: 55vh;
-        height: 50vh;
+        height: 60vh;
         background: #fff;
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
@@ -30,6 +31,7 @@
 
     .repayment-modal.show {
         bottom: 0;
+        display: block;
     }
 
     .modal-header {
@@ -127,9 +129,9 @@
         border-radius: 20px;
         border: none;
         background: #299e29;
-        margin-top: 20px;
+        margin-top: 30px;
+        margin-left: 10px;
         padding: 10px 10px;
-        margin: auto;
         color: white;
         font-weight: 700;
         width: 20rem;
@@ -172,11 +174,15 @@
         .line {
             height: 50px;
         }
+
+        .submit {
+            margin-top: 40px;
+        }
     }
 
     @media screen and (max-width: 480px) {
         .repayment-modal {
-            height: 65vh;
+            height: 60vh;
             width: 20rem;
         }
 
@@ -200,6 +206,11 @@
 
         .close-btn {
             font-size: 20px;
+        }
+
+        .submit {
+            margin-top: 40px;
+            margin-left: 3px;
         }
     }
 </style>

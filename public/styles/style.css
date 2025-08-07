@@ -10,7 +10,7 @@
     }
 
     #hero {
-        margin-top: 10%;
+        margin-top: -20%;
         background: linear-gradient(to top, #ffffff, #32cd32, #32cd32);
         max-width: 500px;
         padding: 1rem;
@@ -88,4 +88,11 @@
         font-size: 12px;
         margin-top: 10px;
         font-weight: lighter;
+    }
+
+    /* Responsiveness */
+    @media (max-width: 480px) {
+        #hero {
+            margin-top: -70%;
+        }
     }

@@ -20,6 +20,12 @@
 
         .success-container {
             z-index: 10;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .success-container.visible {
+            opacity: 1;
         }
 
         h1 {
@@ -59,7 +65,7 @@
     </style>
 </head>
 <body>
-    <div class="success-container">
+    <div class="success-container" id="successMessage">
         <h1>🎉 Hurray!! 🎉</br> Your Loan Has Been Approved</h1>
         <p>Enjoy your funds and don't forget to repay on time to maintain a good credit score.</p>
         <button class="home-btn" onclick="window.location.href='/'">Back</button>
@@ -74,6 +80,11 @@
                 spread: 100,
                 origin: { y: 0.6 },
             });
+
+            // Show message after 1.5 seconds
+            setTimeout(() => {
+                document.getElementById("successMessage").classList.add("visible");
+            }, 1500);
         };
     </script>
     

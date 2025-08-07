@@ -1,6 +1,7 @@
     *{
         margin: 0;
         padding: 0;
+        position: none;
     }
 
     body {
@@ -11,7 +12,7 @@
     }
 
     .main-container {
-        margin-top: 50px;
+        margin-top: 2%;
         background: linear-gradient(to top, #c4c2c2, #c4c2c2, #32cd32);
         max-width: 500px;
         padding: 1rem;
@@ -19,12 +20,13 @@
         color: #ffff;
         text-align: center;
         height: 33rem;
+        margin-bottom: 100px;
     }
 
     .container1 {
         background: #ffffff;
         width: 17rem;
-        margin-top: 5rem;
+        margin-top: 2rem;
         border-radius: 10px;
         padding: 10px 10px;
         display: grid;
@@ -117,6 +119,10 @@
         font-size: 15px;
         color: black;
         cursor: pointer;
+    }
+
+    .footer {
+        bottom: 100px;
     }
 
     @media (max-width: 425px) {

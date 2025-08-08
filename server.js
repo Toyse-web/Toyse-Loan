@@ -3,6 +3,8 @@ import path from "path";
 import { fileURLToPath } from "url";
 import cookieParser from "cookie-parser";
 
+import fs from "fs";
+
 const dirName = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const port = process.env.PORT || 3000;
@@ -110,6 +112,48 @@ app.post("/apply-coupon", (req, res) => {
 app.get("/remove-coupon", (req, res) => {
     res.clearCookie("selectedCoupon");
     res.redirect("/loan-offer");
+});
+
+// Save loan record
+app.post("/agree-loan", (req, res) => {
+    const { amount, tenure, coupon, totalAmount, dueDates } = req.body;
+
+    const loanRecord = {
+        id: Date.now(), //simple unique id
+        amount: parseFloat(amount),
+        tenure: parseInt(tenure),
+        coupon: coupon || null,
+        totalAmount: parseFloat(totalAmount),
+        dueDates, //array of the installment dates
+        status: "unpaid",
+        createdAt: new Date().toISOString()
+    };
+
+    // Load existing loans
+    const loansFilePath = path.join("data", "loans.json");
+    let loans = [];
+    if (fs.existsSync(loansFilePath)) {
+        loans = JSON.parse(fs.readFileSync(loansFilePath));
+    }
+
+    // Append new record
+    loans.push(loanRecord);
+
+    // Save updated loans
+    fs.writeFileSync(loansFilePath, JSON.stringify(loans, null, 2));
+
+    // Redirect to success page
+    res.redirect("/success");
+});
+
+app.get("/repayment-record", (req, res) => {
+    const loansFilePath = path.join("data", "loans.json");
+    let loans = [];
+    if (fs.existsSync(loansFilePath)) {
+        loans = JSON.parse(fs.readFileSync(loansFilePath));
+    }
+
+    res.render("repayment-record", { loans });
 });
 
 // Function for coupon interest

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repayment</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI'; 
+            background: #f9fff9; color: #333; 
+            padding: 30px;
+        }
+
+        h1 {
+            color: #1a7732;
+            text-align: center;
+        }
+
+        .record {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: #fff;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+
+        .paid {
+            color: green;
+        }
+
+        .unpaid {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>📋 Your Loan Repayment Records</h1>
+    <% if (loans.length === 0) {%>
+        <p>You have no loan records yet.</p>
+    <%}%>
+    <% loans.forEach(loan => {%>
+        <div class="record">
+            <p><strong>Loan Amount:</strong> ₦<%= loan.amount.toLocaleString() %></p>
+            <p><strong>Tenure:</strong> <%= loan.tenure %> days</p>
+            <p><strong>Repayment Amount</strong> ₦<%= loan.totalAmount.toLocaleString() %></p>
+            <p><strong>Due Dates:</strong></p>
+            <ul>
+                <% loan.dueDates.forEach(date => {%>
+                    <li><%= date %></li>
+                <%}); %>
+            </ul>
+            <p class="status <%= loan.status %>"><strong>Status:</strong> <%= loan.status %></p>
+        </div>
+    <%}); %>
+</body>
+</html>

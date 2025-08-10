@@ -41,22 +41,51 @@
     <h1>📋 Your Loan Repayment Records</h1>
     <% if (loans.length === 0) {%>
         <p>You have no loan records yet.</p>
-    <%}%>
+    <%} else {%>
     <% loans.forEach(loan => {%>
         <div class="record">
-            <p><strong>Loan Amount:</strong> ₦<%= loan.amount.toLocaleString() %></p>
-            <p><strong>Tenure:</strong> <%= loan.tenure %> days</p>
-            <p><strong>Repayment Amount</strong> ₦<%= loan.totalAmount.toLocaleString() %></p>
+            <p><strong>Loan Amount:</strong> ₦<%= loan.amount ? loan.amount.toLocaleString() : "N/A" %></p>
+            <p><strong>Tenure:</strong> <%= loan.tenure || "N/A" %> days</p>
+            <p><strong>Repayment Amount</strong> ₦<%= loan.totalAmount ? loan.totalAmount.toLocaleString() : "N/A" %></p>
             <p><strong>Due Dates:</strong></p>
             <ul>
-                <% loan.dueDates.forEach(date => {%>
+                <% (loan.dueDates || []).forEach(date => {%>
                     <li><%= date %></li>
                 <%}); %>
             </ul>
             <p class="status <%= loan.status %>"><strong>Status:</strong> <%= loan.status %></p>
         </div>
     <%}); %>
+    <% } %>
 
     <%- include("partials/footer") %>
 </body>
+
+<script>
+    /*document.addEventListener("DOMContentLoaded", () => {
+        const loanRecord = JSON.parse(localStorage.getItem("loanRecord"));
+
+        if (!loanRecord) {
+            alert("Missing loan data");
+            return;
+        }
+        
+        document.getElementById(`loanAmount-${loan.id}`).textContent = loanRecord.loanAmount != null ? loanRecord.loanAmount.toLocaleString() : "N/A";
+        document.getElementById("tenure").textContent = loanRecord.tenure || " N/A";
+        document.getElementById("interest").textContent = loanRecord.interest != null ? loanRecord.loanAmount.toLocaleString() : "N/A";
+        document.getElementById("totalRepayment").textContent = loanRecord.totalRepayment != null ? loanRecord.totalRepayment.toLocaleString() : "N/A";
+        const dueDateList = document.getElementById("dueDates");
+        dueDateList.innerHTML = "";
+
+        if (Array.isArray(loanRecord.dueDates)) {
+            loanRecord.dueDates.forEach(date => {
+                const li = document.createElement("li");
+                li.textContent = date;
+                dueDateList.appendChild(li);
+            });
+        }
+
+        console.log(JSON.parse(localStorage.getItem("loanRecord")));
+    });*/
+</script>
 </html>

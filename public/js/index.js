@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const rate = parseFloat(currentTenure.dataset.rate);
     const days = parseInt(currentTenure.dataset.days);
     const months = days / 30;
-    const installments = currentTenure.dataset.installments;
+    const installments = parseInt(currentTenure.dataset.installments);
 
     let interest = (currentAmount * (rate / 100) * months).toFixed(2);
     let discount = 0;
@@ -82,12 +82,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const amountPerInstallments = (totalRepayment / installments).toFixed(2);
     const baseDate = new Date(); //today as starting point
+    const dueDates = []; //Collect due dates
 
-    scheduleList.innerHTML = ""; //Clear any one
+    scheduleList.innerHTML = ""; //Clear any previous schedule
 
     for (let i = 0; i < installments; i++) {
         const date = new Date(baseDate);
         date.setMonth(date.getMonth() + i);
+
+        // Save each due date
+        dueDates.push(dateFormat(date));
 
         const scheduleItem = document.createElement("div");
         scheduleItem.className = "schedule-item";
@@ -104,6 +108,30 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>`;
             scheduleList.appendChild(scheduleItem);
     }
+
+    // Store repayment data globally for backend saving
+    window.loanAgreementData = {
+        amount: currentAmount,
+        rate,
+        days,
+        installments,
+        interest: Number(interest),
+        discount: Number(discount),
+        totalRepayment,
+        dueDates,
+        amountPerInstallments: Number(amountPerInstallments),
+        approvedAt: new Date().toISOString()
+    };
+
+    const loanRecord = {
+        loanAmount: loanAmount,
+        tenure: currentTenure,
+        interest: interest,
+        totalRepayment: totalRepayment,
+        dueDates: dueDates
+    };
+
+    localStorage.setItem("loanRecord", JSON.stringify(loanRecord));
 };
 
     
@@ -232,8 +260,13 @@ const add = document.getElementById("add");
     }
 
     // Get the success button
-    document.getElementById("apply").addEventListener("click", () => {
+    const confirmLoan = document.getElementById("apply");
+    confirmLoan.addEventListener("click", () => {
         window.location.href = "/loan-success";
+       if (!window.loanAgreementData) return alert("Missing loan data");
+
+        localStorage.setItem("currentLoan", JSON.stringify(window.loanAgreementData));
     });
+
 
 });

@@ -4,6 +4,7 @@ import { fileURLToPath } from "url";
 import cookieParser from "cookie-parser";
 
 import fs from "fs";
+import bodyParser from "body-parser";
 
 const dirName = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -15,19 +16,32 @@ app.use(express.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.set("views", path.join(dirName, "views"));
 app.use(cookieParser());
+app.use(bodyParser.json());
+
+// Path to loans storage file
+const loansFilePath = path.join(dirName, "data", "loans.json");
+
+// Helper functions
+function loadLoans() {
+    if (!fs.existsSync(loansFilePath)) return [];
+    return JSON.parse(fs.readFileSync(loansFilePath)); 
+}
+
+function saveLoans(loans) {
+    fs.writeFileSync(loansFilePath, JSON.stringify(loans, null, 2));
+}
 
 // Routes
 app.get("/", (req, res) => {
     res.render("index", {
         loanLimit: "₦50,000",
-        outstanding: "₦0.00"
+        outstanding: "₦0"
     });
 });
 
 // Loan-offer route
 app.get("/loan-offer", (req, res) => {
     const defaultAmount = 50000;
-    // const defaultTenure = {days: 60, rate: 20.4}
     const tenures = [
         {days: 91, rate: "Locked", installments: 3},
         {days: 60, rate: "20.4%", installments: 2, isDefault: true},
@@ -50,14 +64,10 @@ app.get("/loan-offer", (req, res) => {
         minAmount: 2000,
         maxAmount: 50000,
         numericAmount: defaultAmount,
-        tenures, /*[
-            { days: 91, rate: "Locked", installments: 3 },
-            { days: 60, rate: "20.4%", installments: 2, isDefault: true },
-            { days: 30, rate: "24%", installments: 1}
-        ], */
+        tenures,
         defaultTenure,
         selectedCoupon,
-        defaultCalculation //(defaultAmount, defaultTenure.days, defaultTenure.rate)
+        defaultCalculation
     });
 });
 
@@ -99,7 +109,7 @@ app.get("/selecte-coupon/:code", (req, res) => {
 
     res.cookie("selectedCoupon", JSON.stringify(coupon));
     res.redirect("/loan-offer");
-})
+});
 
 // Apply coupon
 app.post("/apply-coupon", (req, res) => {
@@ -118,41 +128,29 @@ app.get("/remove-coupon", (req, res) => {
 app.post("/agree-loan", (req, res) => {
     const { amount, tenure, coupon, totalAmount, dueDates } = req.body;
 
+    // Build loan record
     const loanRecord = {
-        id: Date.now(), //simple unique id
-        amount: parseFloat(amount),
-        tenure: parseInt(tenure),
+        amount: Number(amount),
+        tenure: Number(tenure),
         coupon: coupon || null,
-        totalAmount: parseFloat(totalAmount),
-        dueDates, //array of the installment dates
-        status: "unpaid",
-        createdAt: new Date().toISOString()
+        totalAmount: Number(totalAmount),
+        dueDates: Array.isArray(dueDates) ? dueDates : [],
+        status: "Pending"
     };
 
-    // Load existing loans
-    const loansFilePath = path.join("data", "loans.json");
-    let loans = [];
-    if (fs.existsSync(loansFilePath)) {
-        loans = JSON.parse(fs.readFileSync(loansFilePath));
-    }
-
-    // Append new record
+    // Save to file
+    const loans = loadLoans();
     loans.push(loanRecord);
+    saveLoans(loans);
 
-    // Save updated loans
-    fs.writeFileSync(loansFilePath, JSON.stringify(loans, null, 2));
-
-    // Redirect to success page
+    console.log("New loan Approved:", loanRecord);
     res.redirect("/success");
+
 });
 
+// Get repayment record
 app.get("/repayment-record", (req, res) => {
-    const loansFilePath = path.join("data", "loans.json");
-    let loans = [];
-    if (fs.existsSync(loansFilePath)) {
-        loans = JSON.parse(fs.readFileSync(loansFilePath));
-    }
-
+    const loans = loadLoans();
     res.render("repayment-record", { loans });
 });
 
@@ -196,11 +194,11 @@ app.post("apply-loan", (req, res) => {
     res.redirect("/"); //Redirect after submission
 });
 
-app.listen(port, () => {
-    console.log(`Server is listening to port ${port}`)
-});
-
 // get the loan success page
 app.get("/loan-success", (req, res) => {
     res.render("partials/success");
+});
+
+app.listen(port, () => {
+    console.log(`Server is listening to port ${port}`)
 });
